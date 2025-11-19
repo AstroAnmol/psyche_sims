@@ -111,7 +111,8 @@ variable        checktimestep equal 1e-3/${dt}
 variable        neighstep equal 1e-2/$(dt) # create a new neigh list 
 
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
-variable        one_second_steps equal 1/${dt} # number of steps for 0.5 seconds time
+variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
+variable        0_1_second_steps equal 0.1/${dt}
 
 ## DEFINITING SIM PROPERTIES
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
@@ -172,7 +173,7 @@ variable        2_5_particle_rad equal ${particle_radius}*2.5
 variable        number_of_particles equal 1600
 
 variable        fill_height equal 0.100 #mm
-variable        floor_height equal 0.00862243
+variable        floor_height equal 0.00816497
 variable        fill_height_f equal ${floor_height}+${fill_height}
 
 # particle ground
@@ -202,7 +203,7 @@ fix		        integr prtcls nve/sphere update dipole
 
 
 # Check time step and initialize dump file
-fix             ctg all check/timestep/gran ${checktimestep} 0.05 0.05
+fix             ctg all check/timestep/gran ${checktimestep} 0.1 0.1
 # run             1
 # unfix           ctg
 
@@ -219,30 +220,42 @@ fix             floor_freeze pts_floor freeze
 # Fill the left half (1 secs)
 run             ${one_second_steps}     #1.0 sec
 
-run             ${one_second_steps}     #1.0 sec
+run             ${half_second_steps}     #0.5 sec
 
 write_restart   restart_rocky_filled.static
 
 # Stop insertion
 unfix           ins
 
-# Tapping (2 secs with 0.5 s intervals)
-fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
+# Remove particles
 
-run             ${half_second_steps}     #0.5 sec
+# ensure particles are static
+velocity        all set 0. 0. 0.
 
-write_restart   restart_tapped_05.static
+# Remove the extra particles
+region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
+# group           prtcls_rem region remove_reg
+delete_atoms    region remove_reg
 
-run             ${half_second_steps}     #0.5 sec
+run             ${0_1_second_steps}
 
-write_restart   restart_tapped_10.static
+# # Tapping (2 secs with 0.5 s intervals)
+# fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
 
-run             ${half_second_steps}     #0.5 sec
+# run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_tapped_15.static
+# write_restart   restart_tapped_05.static
 
-run             ${half_second_steps}     #0.5 sec
+# run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_tapped_20.static
+# write_restart   restart_tapped_10.static
 
-unfix           shear_wiggle
+# run             ${half_second_steps}     #0.5 sec
+
+# write_restart   restart_tapped_15.static
+
+# run             ${half_second_steps}     #0.5 sec
+
+# write_restart   restart_tapped_20.static
+
+# unfix           shear_wiggle
