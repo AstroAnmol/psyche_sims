@@ -154,19 +154,19 @@ neigh_modify    delay 0 check yes
 
 fix             m1 all property/global youngsModulus peratomtype ${youngsM_rocky} ${youngsM_rocky} ${youngsM_wall} 
 fix             m2 all property/global poissonsRatio peratomtype ${poissons_rocky} ${poissons_rocky} ${poissons_wall} 
-fix             m3 all property/global coefficientRestitution peratomtypepair 2 ${coeff_rest_11} ${coeff_rest_12} ${coeff_rest_13} &
+fix             m3 all property/global coefficientRestitution peratomtypepair 3 ${coeff_rest_11} ${coeff_rest_12} ${coeff_rest_13} &
                                         ${coeff_rest_21} ${coeff_rest_22} ${coeff_rest_23} ${coeff_rest_31} ${coeff_rest_32} ${coeff_rest_33}
 
-fix             m4 all property/global coefficientFriction peratomtypepair 2 ${friction_coeff_11} ${friction_coeff_12} ${friction_coeff_13} &
+fix             m4 all property/global coefficientFriction peratomtypepair 3 ${friction_coeff_11} ${friction_coeff_12} ${friction_coeff_13} &
                                 ${friction_coeff_21} ${friction_coeff_22} ${friction_coeff_23} ${friction_coeff_31} ${friction_coeff_32} ${friction_coeff_33}
 
-fix             m5 all property/global coefficientRollingFriction peratomtypepair 2 ${rolling_coeff_11} ${rolling_coeff_12} ${rolling_coeff_13} &
+fix             m5 all property/global coefficientRollingFriction peratomtypepair 3 ${rolling_coeff_11} ${rolling_coeff_12} ${rolling_coeff_13} &
                                         ${rolling_coeff_21} ${rolling_coeff_22} ${rolling_coeff_23} ${rolling_coeff_31} ${rolling_coeff_32} ${rolling_coeff_33}
 
-fix             m6 all property/global coefficientRollingViscousDamping peratomtypepair 2 ${rolling_damp_11} ${rolling_damp_12} ${rolling_damp_13} &
+fix             m6 all property/global coefficientRollingViscousDamping peratomtypepair 3 ${rolling_damp_11} ${rolling_damp_12} ${rolling_damp_13} &
                                         ${rolling_damp_21} ${rolling_damp_22} ${rolling_damp_23} ${rolling_damp_31} ${rolling_damp_32} ${rolling_damp_33}
 
-fix             m8 all property/global cohesionEnergyDensity peratomtypepair 2 ${cohesion_energy_11} ${cohesion_energy_12} ${cohesion_energy_13} &
+fix             m8 all property/global cohesionEnergyDensity peratomtypepair 3 ${cohesion_energy_11} ${cohesion_energy_12} ${cohesion_energy_13} &
                                     ${cohesion_energy_21} ${cohesion_energy_22} ${cohesion_energy_23} ${cohesion_energy_31} ${cohesion_energy_32} ${cohesion_energy_33}
 
 # fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_steel} ${magnetic_susc_brass} ${magnetic_susc_wall}
