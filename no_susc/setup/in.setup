@@ -179,7 +179,7 @@ region          floor block EDGE EDGE EDGE EDGE ${particle_radius} ${2_5_particl
 lattice         hcp ${particle_dia}
 create_atoms    2 region floor
 group           pts_floor region floor
-set             group pts_floor density ${density_brass} diameter ${particle_dia}
+set             group pts_floor density ${density_rocky} diameter ${particle_dia}
 
 # particles and their distribution
 fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_rocky} radius constant ${particle_radius} 
