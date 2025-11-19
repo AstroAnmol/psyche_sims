@@ -26,6 +26,10 @@ variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.150 # 150 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
+# Declare domain
+region          domain block 0 ${dom_length} 0 ${dom_width} 0 ${dom_height} units box
+create_box      3 domain
+
 variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
 # Particle properties
@@ -109,10 +113,6 @@ variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seco
 variable        one_second_steps equal 1/${dt} # number of steps for 0.5 seconds time
 
 ## DEFINITING SIM PROPERTIES
-# Declare domain
-region          domain block 0 ${dom_length} 0 ${dom_width} 0 ${dom_height} units box
-create_box      3 domain
-
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
 neighbor        ${skin_dist} bin
 # neigh_modify delay 0, this is the default, rebuild neighbor list every timestep
