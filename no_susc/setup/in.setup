@@ -27,10 +27,10 @@ variable        dom_height equal 0.150 # 150 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
 # Declare domain
-region          domain block 0 ${dom_length} 0 ${dom_width} 0 ${dom_height} units box
+region          domain block 0 ${mid_wall} 0 ${dom_width} 0 ${dom_height} units box
 create_box      2 domain
 
-variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
+# variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
 # Particle properties
 variable        particle_dia equal 0.010 # 10 mm
@@ -96,6 +96,7 @@ variable        cohesion_energy_21 equal ${cohesion_energy_12}
 variable        cohesion_energy_22 equal ${cohesion_energy} # wall-wall (doesn't interact)
 
 # Force properties
+variable        earth_g equal 9.82 #m/s^2
 variable        grav_value equal 0.13 #m/s^2
 
 # Time steps
@@ -145,7 +146,7 @@ pair_coeff	    * *  # the asterisks set force field coeefficients for all atom t
 fix		        wall_z1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 zplane 0.0        #floor
 fix		        wall_z2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 zplane ${dom_height}
 fix             wall_x1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane 0.0            
-fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane ${dom_length}
+# fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane ${mid_wall}
 fix             wall_y1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 yplane 0.0            
 fix             wall_y2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 yplane ${dom_width}
 
@@ -153,7 +154,7 @@ fix             wall_y2 all wall/gran model hertz tangential history cohesion sj
 fix             wall_center all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane ${mid_wall}
 
 # Gravity
-fix             grav all gravity ${grav_value} vector -0.0 0.0 -1.0 # negative z
+fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -216,6 +217,8 @@ velocity       all set 0. 0. 0.
 fix             floor_freeze pts_floor freeze
 
 # Fill the left half (1 secs)
+run             ${one_second_steps}     #1.0 sec
+
 run             ${one_second_steps}     #1.0 sec
 
 write_restart   restart_rocky_filled.static
