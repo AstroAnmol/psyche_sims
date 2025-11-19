@@ -142,15 +142,15 @@ pair_style      gran model hertz tangential history cohesion sjkr rolling_fricti
 pair_coeff	    * *  # the asterisks set force field coeefficients for all atom types, but then no other args? ASK TOM
 
 ## box walls - define simulation 	
-fix		        wall_z1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane 0.0        #floor
-fix		        wall_z2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane ${dom_height}
-fix             wall_x1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane 0.0            
-fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${dom_length}
-fix             wall_y1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane 0.0            
-fix             wall_y2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane ${dom_width}
+fix		        wall_z1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 zplane 0.0        #floor
+fix		        wall_z2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 zplane ${dom_height}
+fix             wall_x1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane 0.0            
+fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane ${dom_length}
+fix             wall_y1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 yplane 0.0            
+fix             wall_y2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 yplane ${dom_width}
 
 ## wall in centre which is removed to simulate mass wasting
-fix             wall_center all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${mid_wall}
+fix             wall_center all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 2 xplane ${mid_wall}
 
 # Gravity
 fix             grav all gravity ${grav_value} vector -0.0 0.0 -1.0 # negative z
@@ -177,7 +177,7 @@ variable        fill_height_f equal ${floor_height}+${fill_height}
 # particle ground
 region          floor block EDGE EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
 lattice         hcp ${particle_dia}
-create_atoms    2 region floor
+create_atoms    1 region floor
 group           pts_floor region floor
 set             group pts_floor density ${density_rocky} diameter ${particle_dia}
 
