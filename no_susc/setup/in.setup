@@ -118,8 +118,8 @@ neighbor        ${skin_dist} bin
 # neigh_modify delay 0, this is the default, rebuild neighbor list every timestep
 neigh_modify    delay 0 check yes
 
-fix             m1 all property/global youngsModulus peratomtype ${youngsM_rocky} ${youngsM_rocky} 
-fix             m2 all property/global poissonsRatio peratomtype ${poissons_steel} ${poissons_brass} 
+fix             m1 all property/global youngsModulus peratomtype ${youngsM_rocky} ${youngsM_wall} 
+fix             m2 all property/global poissonsRatio peratomtype ${poissons_rocky} ${poissons_wall} 
 fix             m3 all property/global coefficientRestitution peratomtypepair 2 ${coeff_rest_11} ${coeff_rest_12} &
                                         ${coeff_rest_21} ${coeff_rest_22} 
 
@@ -182,7 +182,7 @@ group           pts_floor region floor
 set             group pts_floor density ${density_brass} diameter ${particle_dia}
 
 # particles and their distribution
-fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_steel} radius constant ${particle_radius} 
+fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_rocky} radius constant ${particle_radius} 
 fix             pdd1 all particledistribution/discrete 15487517 1 pts1 1.0
 
 # # region and insertion
@@ -206,7 +206,7 @@ fix             ctg all check/timestep/gran ${checktimestep} 0.05 0.05
 # unfix           ctg
 
 # Create imaging information
-dump            dmp all custom ${dumpstep} results_steel_nomag/dump*.post id type x y z vx vy vz radius fx fy fz mass
+dump            dmp all custom ${dumpstep} results/dump*.post id type x y z vx vy vz radius fx fy fz mass
 
 
 # ensure particles are static 
@@ -228,18 +228,18 @@ fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_steel_tapped_05.static
+write_restart   restart_tapped_05.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_steel_tapped_10.static
+write_restart   restart_tapped_10.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_steel_tapped_15.static
+write_restart   restart_tapped_15.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_steel_tapped_20.static
+write_restart   restart_tapped_20.static
 
 unfix           shear_wiggle
