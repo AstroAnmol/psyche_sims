@@ -28,7 +28,7 @@ variable        mid_wall   equal 0.150 # 150 mm
 
 # Declare domain
 region          domain block 0 ${dom_length} 0 ${dom_width} 0 ${dom_height} units box
-create_box      3 domain
+create_box      2 domain
 
 variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
