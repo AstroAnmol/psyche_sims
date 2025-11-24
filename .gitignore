@@ -2,3 +2,5 @@
 # *.static
 results/*
 *.post
+*.txt
+*.out

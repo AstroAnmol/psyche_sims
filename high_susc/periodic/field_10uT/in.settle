@@ -141,14 +141,17 @@ variable        magnetic_susc_wall equal 0.0
 variable        earth_g equal 9.82 #m/s^2
 variable        grav_value equal 0.13 #m/s^2
 
+variable        mag_B_F equal 10e-6 # Tesla (31.2 microTesla, Earth field)
+variable        mag_H_F equal ${mag_B_F}/(4*3.14159e-7) # A/m
+
 # Time steps
 variable        dt equal 5e-6 # s every 5 microseconds
 variable        dumptime equal 1e-3 # s every millisecond
 variable        dumpstep equal ${dumptime}/${dt}
 variable        thermostep equal ${dumpstep}
 variable        checktimestep equal 1e-3/${dt} 
-# variable        magtime equal 1e-3 
-# variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
+variable        magtime equal 1e-3 
+variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
 variable        neighstep equal 1e-2/$(dt) # create a new neigh list 
 
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
