@@ -29,7 +29,7 @@ variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
 
-# variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
+variable        dom_dia equal sqrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
 # Particle properties
 variable        particle_dia equal 0.010 # 10 mm
@@ -37,8 +37,8 @@ variable        particle_radius equal ${particle_dia}/2
 
 # Neighbor skin distance 
 # use the first one for non-magnetic case
-variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 3 diameters 
-# variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
+# variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 3 diameters 
+variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
 
 ################################
 # Material properties
