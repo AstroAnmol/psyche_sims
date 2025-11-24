@@ -47,7 +47,7 @@ variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 
 
 # TYPE 1: Metallic REGOLITH 
 variable        density_metallic equal 7870 # kg/m3 #KAMACITE Tanton et al 2020
-variable        youngsM_metallic equal 1800 # N/m^2 
+variable        youngsM_metallic equal 180e7 # N/m^2 
 variable        poissons_metallic equal 0.275
 
 # TYPE 2: Floor Same as Metallic REGOLITH
