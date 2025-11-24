@@ -1,4 +1,4 @@
-### Avalanching experiment with rocky asteroid material based on Frizzel et al 2025
+### Avalanching experiment with metallic asteroid regolith particles and high magnetic susceptibility and periodic boundaries
 
 
 ### Initialization
@@ -17,6 +17,8 @@ communicate     single vel yes
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
 processors      4 3 3
 
+#############################
+read_restart ../setup/restart_metallic_filled.static
 
 ### VARIABLES DEFINITION
 
@@ -26,9 +28,6 @@ variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
-# Declare domain
-region          domain block 0 ${mid_wall} 0 ${dom_width} 0 ${dom_height} units box
-create_box      3 domain
 
 # variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
@@ -156,6 +155,7 @@ variable        neighstep equal 1e-2/$(dt) # create a new neigh list
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
+variable        two_second_steps equal 2.0/${dt} # number of steps for 2.0 seconds time
 
 ## DEFINITING SIM PROPERTIES
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
@@ -190,7 +190,7 @@ pair_coeff	    * *  # the asterisks set force field coeefficients for all atom t
 fix		        wall_z1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane 0.0        #floor
 fix		        wall_z2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane ${dom_height}
 fix             wall_x1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane 0.0            
-# fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${mid_wall}
+fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${dom_length}
 # fix             wall_y1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane 0.0            
 # fix             wall_y2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane ${dom_width}
 
@@ -198,7 +198,7 @@ fix             wall_x1 all wall/gran model hertz tangential history cohesion sj
 fix             wall_center all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${mid_wall}
 
 # Gravity
-fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
+fix             grav all gravity ${grav_value} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -260,45 +260,27 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-# Fill the left half (1 secs)
-run             ${one_second_steps}     #1.0 sec
+run            0     
 
-run             ${half_second_steps}     #0.5 sec
+# Pull the stopper
+unfix           wall_center
+print           "INFO: Center wall unfix_ed. Stopper pulled."
 
-write_restart   restart_rocky_filled.static
 
-# Stop insertion
-unfix           ins
+# --- Avalanche Phase ---
+print           "INFO: Starting avalanching simulation for ${two_second_steps} steps (2 seconds)."
 
-# Remove particles
 
-# ensure particles are static
-velocity        all set 0. 0. 0.
+# RUN FOR 2,0 SECONDS
+run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+                # "write_restart restart_mag_drop.static"
 
-# Remove the extra particles
-region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# group           prtcls_rem region remove_reg
-delete_atoms    region remove_reg
+print           "INFO: Avalanching run for 2 seconds complete."
 
-run             ${0_1_second_steps}
+write_restart   restart_nomag_drop_final_2s.static
+print           "INFO: Restart file 'restart_nomag_drop_final_2s.static' written."
 
-# # Tapping (2 secs with 0.5 s intervals)
-# fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
+print           "INFO: Main Avalanche Phase Completed."
 
-# run             ${half_second_steps}     #0.5 sec
-
-# write_restart   restart_tapped_05.static
-
-# run             ${half_second_steps}     #0.5 sec
-
-# write_restart   restart_tapped_10.static
-
-# run             ${half_second_steps}     #0.5 sec
-
-# write_restart   restart_tapped_15.static
-
-# run             ${half_second_steps}     #0.5 sec
-
-# write_restart   restart_tapped_20.static
-
-# unfix           shear_wiggle
+print           "INFO: Simulation ended."
+# --- End of Script ---
