@@ -246,7 +246,7 @@ fix		        integr prtcls nve/sphere update dipole
 
 
 # Check time step and initialize dump file
-fix             ctg all check/timestep/gran ${checktimestep} 0.1 0.1
+fix             ctg all check/timestep/gran ${checktimestep} 0.01 0.01
 # run             1
 # unfix           ctg
 
