@@ -239,7 +239,19 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-run            0     
+run            0
+
+change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
+
+# particle ground
+region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
+lattice         hcp ${particle_dia}
+create_atoms    2 region floor
+group           pts_floor region floor
+set             group pts_floor density ${density_metallic} diameter ${particle_dia}
+
+unfix           floor_freeze
+fix             floor_freeze pts_floor freeze
 
 # Pull the stopper
 unfix           wall_center
