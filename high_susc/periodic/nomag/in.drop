@@ -143,7 +143,7 @@ variable        grav_value equal 0.13 #m/s^2
 
 # Time steps
 # Time steps
-variable        dt equal 1e-6 # s every 1 microseconds
+variable        dt equal 5e-6 # s every 5 microseconds
 variable        dumptime equal 1e-3 # s every millisecond
 variable        dumpstep equal ${dumptime}/${dt}
 variable        thermostep equal ${dumpstep}
@@ -241,7 +241,7 @@ fix             floor_freeze pts_floor freeze
 
 run            0
 
-change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
+change_box      all boundary f p fs x final 0 ${dom_length} # 280 mm
 
 # particle ground
 region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
