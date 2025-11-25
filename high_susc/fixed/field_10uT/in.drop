@@ -245,7 +245,7 @@ fix             floor_freeze pts_floor freeze
 
 run            0
 
-change_box      all boundary f p fs x final 0 ${dom_length} # 280 mm
+change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
 
 # particle ground
 region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
