@@ -38,7 +38,8 @@ variable        particle_radius equal ${particle_dia}/2
 # Neighbor skin distance 
 # use the first one for non-magnetic case
 # variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 3 diameters 
-variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
+# variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
+variable        skin_dist equal 0.6
 
 ################################
 # Material properties
@@ -152,7 +153,7 @@ variable        thermostep equal ${dumpstep}
 variable        checktimestep equal 1e-3/${dt} 
 variable        magtime equal 1e-3 
 variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
-variable        neighstep equal 1e-2/$(dt) # create a new neigh list 
+variable        neighstep equal 1e-2/${dt} # create a new neigh list 
 
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time

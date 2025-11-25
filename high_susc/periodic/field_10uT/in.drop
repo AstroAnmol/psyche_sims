@@ -152,7 +152,7 @@ variable        thermostep equal ${dumpstep}
 variable        checktimestep equal 1e-3/${dt} 
 variable        magtime equal 1e-3 
 variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
-variable        neighstep equal 1e-2/$(dt) # create a new neigh list 
+variable        neighstep equal 1e-2/${dt} # create a new neigh list 
 
 
 
