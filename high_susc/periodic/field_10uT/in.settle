@@ -29,7 +29,7 @@ variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
 
-variable        dom_dia equal sqrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
+variable        dom_diag equal sqrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
 # Particle properties
 variable        particle_dia equal 0.010 # 10 mm
