@@ -18,7 +18,7 @@ communicate     single vel yes
 processors      4 3 3
 
 #############################
-read_restart ../settle/restart_settled.static
+read_restart ./restart_settled.static
 
 ### VARIABLES DEFINITION
 
