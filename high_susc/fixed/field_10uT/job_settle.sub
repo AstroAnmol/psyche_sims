@@ -1,0 +1,22 @@
+#!/bin/csh
+#SBATCH --job-name=fixed_field_10uT_settle
+#SBATCH --nodes=1
+#SBATCH --ntasks=36
+#SBATCH --oversubscribe
+#SBATCH --time 06:00:00
+#SBATCH --mail-user sikka@umd.edu
+#SBATCH --mail-type=ALL
+
+#############################################################
+# change the below input variable to your own filename
+#############################################################
+
+
+set dir=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/psyche_sims/high_susc/fixed/field_10uT/
+set codeexe=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/avalanching_experiments/lmp_auto
+
+cd $dir
+module load openmpi
+module load eigen
+module load boost
+mpirun -np 36 $codeexe -echo both -i ./in.settle > ./output_settle.txt
