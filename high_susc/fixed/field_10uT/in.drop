@@ -270,7 +270,7 @@ print           "INFO: Starting avalanching simulation"
 
 
 # RUN FOR 0.5 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+run             ${half_second_steps} #pre no #every ${deci_second_steps} &
                 # "write_restart restart_mag_drop.static"
 
 print           "INFO: Avalanching run for 0.5 seconds complete."
