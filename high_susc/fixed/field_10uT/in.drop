@@ -266,37 +266,47 @@ print           "INFO: Center wall unfix_ed. Stopper pulled."
 
 
 # --- Avalanche Phase ---
-print           "INFO: Starting avalanching simulation for ${two_second_steps} steps (2 seconds)."
+print           "INFO: Starting avalanching simulation"
 
 
-# RUN FOR 2.0 SECONDS
+# RUN FOR 0.5 SECONDS
 run             ${two_second_steps} #pre no #every ${deci_second_steps} &
                 # "write_restart restart_mag_drop.static"
 
-print           "INFO: Avalanching run for 2 seconds complete."
+print           "INFO: Avalanching run for 0.5 seconds complete."
 
-write_restart   restart_nomag_drop_final_2s.static
-print           "INFO: Restart file 'restart_nomag_drop_final_2s.static' written."
+write_restart   restart_nomag_drop_final_0_5s.static
+print           "INFO: Restart file 'restart_nomag_drop_final_0_5s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
-                # "write_restart restart_mag_drop.static"
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+#                 # "write_restart restart_mag_drop.static"
 
-write_restart   restart_nomag_drop_final_4s.static
-print           "INFO: Restart file 'restart_nomag_drop_final_4s.static' written."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
-                # "write_restart restart_mag_drop.static"
+# write_restart   restart_nomag_drop_final_2s.static
+# print           "INFO: Restart file 'restart_nomag_drop_final_2s.static' written."
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+#                 # "write_restart restart_mag_drop.static"
 
-write_restart   restart_nomag_drop_final_6s.static
-print           "INFO: Restart file 'restart_nomag_drop_final_6s.static' written."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-print           "INFO: Main Avalanche Phase Completed."
+# write_restart   restart_nomag_drop_final_4s.static
+# print           "INFO: Restart file 'restart_nomag_drop_final_4s.static' written."
 
-print           "INFO: Simulation ended."
-# --- End of Script ---
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+#                 # "write_restart restart_mag_drop.static"
+
+# print           "INFO: Avalanching run for 2 seconds complete."
+
+# write_restart   restart_nomag_drop_final_6s.static
+# print           "INFO: Restart file 'restart_nomag_drop_final_6s.static' written."
+
+# print           "INFO: Main Avalanche Phase Completed."
+
+# print           "INFO: Simulation ended."
+# # --- End of Script ---
