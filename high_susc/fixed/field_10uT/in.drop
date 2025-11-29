@@ -270,14 +270,13 @@ print           "INFO: Starting avalanching simulation"
 
 
 # RUN FOR 0.5 SECONDS
-run             ${half_second_steps} #pre no #every ${deci_second_steps} &
+run             ${0_1_second_steps} #pre no #every ${deci_second_steps} &
                 # "write_restart restart_mag_drop.static"
 
-print           "INFO: Avalanching run for 0.5 seconds complete."
+print           "INFO: Avalanching run for 0.1 seconds complete."
 
-write_restart   restart_nomag_drop_final_0_5s.static
-print           "INFO: Restart file 'restart_nomag_drop_final_0_5s.static' written."
-
+write_restart   restart_nomag_drop_final_0_1s.static
+print           "INFO: Restart file 'restart_nomag_drop_final_0_1s.static' written."
 
 # # RUN FOR 2.0 SECONDS
 # run             ${two_second_steps} #pre no #every ${deci_second_steps} &
