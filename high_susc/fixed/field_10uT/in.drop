@@ -146,11 +146,11 @@ variable        mag_H_F equal ${mag_B_F}/(4*3.14159e-7) # A/m
 
 # Time steps
 variable        dt equal 5e-6 # s every 5 microseconds
-variable        dumptime equal 2e-3 # s every millisecond
+variable        dumptime equal 5e-3 # s every millisecond
 variable        dumpstep equal ${dumptime}/${dt}
 variable        thermostep equal ${dumpstep}
-variable        checktimestep equal 2e-3/${dt} 
-variable        magtime equal 2e-3 
+variable        checktimestep equal 5e-3/${dt} 
+variable        magtime equal 5e-3 
 variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
 variable        neighstep equal 1e-2/${dt} # create a new neigh list 
 
