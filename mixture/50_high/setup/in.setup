@@ -201,12 +201,19 @@ variable        cohesion_energy_13 equal ${cohesion_energy} # metallic-floor
 variable        cohesion_energy_14 equal 0.0 # metallic-wall 
 
 variable        cohesion_energy_21 equal ${cohesion_energy_12}
-variable        cohesion_energy_22 equal ${cohesion_energy} # floor-floor (doesn't interact)
-variable        cohesion_energy_23 equal 0.0 # floor-wall (doesn't interact)
+variable        cohesion_energy_22 equal ${cohesion_energy} # rocky-rocky 
+variable        cohesion_energy_23 equal ${cohesion_energy} # rocky-floor 
+variable        cohesion_energy_24 equal 0.0 # rocky-wall 
 
 variable        cohesion_energy_31 equal ${cohesion_energy_13}
 variable        cohesion_energy_32 equal ${cohesion_energy_23}
-variable        cohesion_energy_33 equal 0.0 # wall-wall (doesn't interact)
+variable        cohesion_energy_33 equal 0.0 # floor-floor (doesn't interact)
+variable        cohesion_energy_34 equal 0.0 # wall-floor (doesn't interact)
+
+variable        cohesion_energy_41 equal ${cohesion_energy_14}
+variable        cohesion_energy_42 equal ${cohesion_energy_24}
+variable        cohesion_energy_43 equal ${cohesion_energy_34}
+variable        cohesion_energy_44 equal 0.0 # wall-wall (doesn't interact)
 
 # Force properties
 variable        earth_g equal 9.82 #m/s^2
