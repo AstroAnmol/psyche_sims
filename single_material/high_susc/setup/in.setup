@@ -1,6 +1,5 @@
 ### Avalanching experiment with metallic asteroid regolith particles and high magnetic susceptibility
 
-
 ### Initialization
 # Preliminaries
 units           si
@@ -16,6 +15,7 @@ communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
 processors      4 3 3
+# running on 36 processors on dustiest
 
 
 ### VARIABLES DEFINITION
@@ -28,6 +28,7 @@ variable        mid_wall   equal 0.150 # 150 mm
 
 # Declare domain
 region          domain block 0 ${mid_wall} 0 ${dom_width} 0 ${dom_height} units box
+# Three types of materials to be used - 1: particles, 2: floor, 3: walls
 create_box      3 domain
 
 # variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
@@ -37,7 +38,7 @@ variable        particle_dia equal 0.010 # 10 mm
 variable        particle_radius equal ${particle_dia}/2
 
 # Neighbor skin distance 
-# use the first one for non-magnetic case
+# use the first one for non-magnetic case and second with magnetic cases
 variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 3 diameters 
 # variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
 
@@ -45,24 +46,59 @@ variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 
 # Material properties
 ################################
 
-# TYPE 1: Iron Oxides and Silicates REGOLITH 
-variable        density_metallic equal 7870 # kg/m3 #KAMACITE Tanton et al 2020
-variable        youngsM_metallic equal 180e7 # N/m^2 
-variable        poissons_metallic equal 0.275
+# METALLIC REGOLITH (KAMACITE, Fe-Ni ALLOY)
+variable        density_kamacite equal 7870 # kg/m3 # Tanton et al 2020
+variable        youngsM_kamacite equal 150.96e7 # N/m^2 # Tang 2023
+variable        poissons_kamacite equal 0.17 # Tang 2023
+variable        mag_susc_kamacite equal 20.0 # Assumed
 
-# TYPE 2: Floor Same as Metallic REGOLITH
+# METALLIC REGOLITH (TROILITE, FeS)
+variable        density_troilite equal 4900 # kg/m3 # Tanton et al 2020
+variable        youngsM_troilite equal 6.0e9 # N/m^2 # Tang 2023
+variable        poissons_troilite equal 0.25 # Tang 2023
+variable        mag_susc_troilite equal 5.0 # Assumed
 
+# ROCKY ASTEROID REGOLITH (Frizzell et al 2025)
+variable        density_rocky equal 2500 # kg/m3
+variable        youngsM_rocky equal 5e6 # N/m^2
+variable        poissons_rocky equal 0.20
+variable        mag_susc_rocky equal 0.0 # NOT MAGNETIC
 
-# ROCKY ASTEROID REGOLITH (Frizell et al 2025)
-# variable        density_rocky equal 2500 # kg/m3
-# variable        youngsM_rocky equal 5e6 # N/m^2
-# variable        poissons_rocky equal 0.20
+# Acrylic (Sikka et al 2026)
+variable        density_acrylic equal 1250 # kg/m3
+variable        youngsM_acrylic equal 3e7 # N/m^2
+variable        poissons_acrylic equal 0.4
+variable        mag_susc_acrylic equal 0.0 # NOT MAGNETIC
 
-# TYPE 3: Wall (Acrylic)
-variable        density_wall equal 1250 # kg/m3
-variable        youngsM_wall equal 3e7 # N/m^2
-variable        poissons_wall equal 0.4
+################################
+# Choosing material for particles, walls and floor
+# Change these variables to change material types
+################################
 
+# Particle material type 
+# Using Kamacite for high magnetic susceptibility case
+variable        density_particles equal ${density_kamacite}
+variable        youngsM_particles equal ${youngsM_kamacite}
+variable        poissons_particles equal ${poissons_kamacite}
+variable        magnetic_susc_particles equal ${mag_susc_kamacite}
+
+# Floor material type
+# Same as particles
+variable        density_floor equal ${density_kamacite}
+variable        youngsM_floor equal ${youngsM_kamacite}
+variable        poissons_floor equal ${poissons_kamacite}
+variable        magnetic_susc_floor equal ${mag_susc_kamacite}
+
+# Wall material type
+# Using Acrylic for walls
+variable        density_wall equal ${density_acrylic}
+variable        youngsM_wall equal ${youngsM_acrylic}
+variable        poissons_wall equal ${poissons_acrylic}
+variable        magnetic_susc_wall equal ${mag_susc_acrylic}
+# ################################
+
+# KEEPING FRICTION, RESTITUTION, COHESION CONSTANT FOR ALL SIMULATIONS
+# BASED ON FRIZZELL ET AL 2025 and SIKKA ET AL 2026
 
 # Friction Properties
 variable        friction_coeff_11 equal 1.0 # metallic-metallic
@@ -91,7 +127,6 @@ variable        rolling_coeff_23 equal 0.01 # wall-floor (doesn't interact)
 variable        rolling_coeff_31 equal ${rolling_coeff_13}
 variable        rolling_coeff_32 equal ${rolling_coeff_23}
 variable        rolling_coeff_33 equal 0.01 # wall-wall (doesn't interact)
-
 
 # Rolling Damp
 variable        rolling_damp_11 equal 2.0 # metallic-metallic
@@ -133,26 +168,23 @@ variable        cohesion_energy_31 equal ${cohesion_energy_13}
 variable        cohesion_energy_32 equal ${cohesion_energy_23}
 variable        cohesion_energy_33 equal 0.0 # wall-wall (doesn't interact)
 
-# Magnetic susceptibility
-variable        magnetic_susc_metallic equal 20.0
-variable        magnetic_susc_floor equal ${magnetic_susc_metallic}
-variable        magnetic_susc_wall equal 0.0
-
 # Force properties
 variable        earth_g equal 9.82 #m/s^2
-variable        grav_value equal 0.13 #m/s^2
+variable        psyche_g equal 0.13 #m/s^2
 
-# Time steps
 # Time steps
 variable        dt equal 1e-6 # s every 1 microseconds
 variable        dumptime equal 1e-3 # s every millisecond
 variable        dumpstep equal ${dumptime}/${dt}
 variable        thermostep equal ${dumpstep}
 variable        checktimestep equal 1e-3/${dt} 
+variable        neighstep equal 1e-2/${dt} # create a new neigh list 
+
+# MAGNETIC TIME NEEDED IF MAGNETIC FORCES ARE USED
 # variable        magtime equal 1e-3 
 # variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
-variable        neighstep equal 1e-2/$(dt) # create a new neigh list 
 
+# Variables for run times
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
@@ -163,8 +195,8 @@ neighbor        ${skin_dist} bin
 # neigh_modify delay 0, this is the default, rebuild neighbor list every timestep
 neigh_modify    delay 0 check yes
 
-fix             m1 all property/global youngsModulus peratomtype ${youngsM_metallic} ${youngsM_metallic} ${youngsM_wall} 
-fix             m2 all property/global poissonsRatio peratomtype ${poissons_metallic} ${poissons_metallic} ${poissons_wall} 
+fix             m1 all property/global youngsModulus peratomtype ${youngsM_particles} ${youngsM_floor} ${youngsM_wall} 
+fix             m2 all property/global poissonsRatio peratomtype ${poissons_particles} ${poissons_floor} ${poissons_wall} 
 fix             m3 all property/global coefficientRestitution peratomtypepair 3 ${coeff_rest_11} ${coeff_rest_12} ${coeff_rest_13} &
                                         ${coeff_rest_21} ${coeff_rest_22} ${coeff_rest_23} ${coeff_rest_31} ${coeff_rest_32} ${coeff_rest_33}
 
@@ -180,24 +212,25 @@ fix             m6 all property/global coefficientRollingViscousDamping peratomt
 fix             m8 all property/global cohesionEnergyDensity peratomtypepair 3 ${cohesion_energy_11} ${cohesion_energy_12} ${cohesion_energy_13} &
                                     ${cohesion_energy_21} ${cohesion_energy_22} ${cohesion_energy_23} ${cohesion_energy_31} ${cohesion_energy_32} ${cohesion_energy_33}
 
-fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_metallic} ${magnetic_susc_floor} ${magnetic_susc_wall}
+# fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_particles} ${magnetic_susc_floor} ${magnetic_susc_wall}
 
 ## Pair style
 pair_style      gran model hertz tangential history cohesion sjkr rolling_friction epsd torsionTorque on
 pair_coeff	    * *  # the asterisks set force field coeefficients for all atom types, but then no other args? ASK TOM
 
 ## box walls - define simulation 	
-fix		        wall_z1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane 0.0        #floor
-fix		        wall_z2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 zplane ${dom_height}
-fix             wall_x1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane 0.0            
-# fix             wall_x2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${mid_wall}
-fix             wall_y1 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane 0.0            
-fix             wall_y2 all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 yplane ${dom_width}
+fix		        wall_z1 all wall/gran model hertz tangential history primitive type 3 zplane 0.0        #floor
+fix		        wall_z2 all wall/gran model hertz tangential history primitive type 3 zplane ${dom_height}
+fix             wall_x1 all wall/gran model hertz tangential history primitive type 3 xplane 0.0            
+# fix             wall_x2 all wall/gran model hertz tangential history primitive type 3 xplane ${dom_length}  
+fix             wall_y1 all wall/gran model hertz tangential history primitive type 3 yplane 0.0            
+fix             wall_y2 all wall/gran model hertz tangential history primitive type 3 yplane ${dom_width}
 
 ## wall in centre which is removed to simulate mass wasting
-fix             wall_center all wall/gran model hertz tangential history cohesion sjkr rolling_friction epsd primitive type 3 xplane ${mid_wall}
+fix             wall_center all wall/gran model hertz tangential history primitive type 3 xplane ${mid_wall}
 
 # Gravity
+# setting the particle assembly in earth gravity
 fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
@@ -224,10 +257,10 @@ region          floor block EDGE EDGE EDGE EDGE ${particle_radius} ${2_5_particl
 lattice         hcp ${particle_dia}
 create_atoms    2 region floor
 group           pts_floor region floor
-set             group pts_floor density ${density_metallic} diameter ${particle_dia}
+set             group pts_floor density ${density_floor} diameter ${particle_dia}
 
 # particles and their distribution
-fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_metallic} radius constant ${particle_radius} 
+fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_particles} radius constant ${particle_radius} 
 fix             pdd1 all particledistribution/discrete 15487517 1 pts1 1.0
 
 # # region and insertion
@@ -265,7 +298,7 @@ run             ${one_second_steps}     #1.0 sec
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_metallic_filled.static
+write_restart   restart_kamacite_filled.static
 
 # Stop insertion
 unfix           ins
@@ -282,23 +315,24 @@ delete_atoms    region remove_reg
 
 run             ${0_1_second_steps}
 
-# # Tapping (2 secs with 0.5 s intervals)
-# fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
+write_restart  restart_kamacite_cleaned.static
 
-# run             ${half_second_steps}     #0.5 sec
+# Tapping (2 secs with 0.5 s intervals)
+fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
 
-# write_restart   restart_tapped_05.static
+run             ${half_second_steps}     #0.5 sec
 
-# run             ${half_second_steps}     #0.5 sec
+write_restart   restart_kamacite_tapped_05.static
 
-# write_restart   restart_tapped_10.static
+run             ${half_second_steps}     #0.5 sec
 
-# run             ${half_second_steps}     #0.5 sec
+write_restart   restart_kamacite_tapped_10.static
 
-# write_restart   restart_tapped_15.static
+run             ${half_second_steps}     #0.5 sec
 
-# run             ${half_second_steps}     #0.5 sec
+write_restart   restart_kamacite_tapped_15.static
 
-# write_restart   restart_tapped_20.static
+run             ${half_second_steps}     #0.5 sec
 
-# unfix           shear_wiggle
+write_restart   restart_kamacite_tapped_20.static
+unfix           shear_wiggle
