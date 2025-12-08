@@ -344,7 +344,7 @@ run             ${one_second_steps}     #1.0 sec
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_25_high_filled.static
+write_restart   restart_mix_75_high_filled.static
 
 # Stop insertion
 unfix           ins
@@ -361,24 +361,24 @@ delete_atoms    region remove_reg
 
 run             ${0_1_second_steps}
 
-write_restart  restart_mix_25_high_cleaned.static
+write_restart  restart_mix_75_high_cleaned.static
 
 # Tapping (2 secs with 0.5 s intervals)
 fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_25_high_tapped_05.static
+write_restart   restart_mix_75_high_tapped_05.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_25_high_tapped_10.static
+write_restart   restart_mix_75_high_tapped_10.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_25_high_tapped_15.static
+write_restart   restart_mix_75_high_tapped_15.static
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_25_high_tapped_20.static
+write_restart   restart_mix_75_high_tapped_20.static
 unfix           shear_wiggle
