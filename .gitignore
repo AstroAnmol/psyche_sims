@@ -1,7 +1,25 @@
+# IDE and Editor
+.vscode/
+.DS_Store
+
+# Python
+__pycache__/
+.venv/
+
+# LIGGGHTS specific
 *.liggghts
-# *.static
-results/*
 *.post
+
+# Output files
+results/*
 *.txt
 *.out
-drop_T*/
+
+# Analysis
+avalanching_analysis/*
+
+# Archive
+archive/*
+
+# Commented out
+# *.static
