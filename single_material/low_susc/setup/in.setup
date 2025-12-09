@@ -245,7 +245,7 @@ thermo_modify	lost ignore norm no
 
 ## Particle insertion
 variable        2_5_particle_rad equal ${particle_radius}*2.5
-variable        number_of_particles equal 1600
+variable        number_of_particles equal 2000
 
 variable        fill_height equal 0.100 #mm
 variable        floor_height equal 0.00816497
@@ -307,14 +307,14 @@ unfix           ins
 # ensure particles are static
 velocity        all set 0. 0. 0.
 
-# Remove the extra particles
-region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# group           prtcls_rem region remove_reg
-delete_atoms    region remove_reg
+# # Remove the extra particles
+# region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
+# # group           prtcls_rem region remove_reg
+# delete_atoms    region remove_reg
 
-run             ${0_1_second_steps}
+# run             ${0_1_second_steps}
 
-write_restart  restart_troilite_cleaned.static
+# write_restart  restart_troilite_cleaned.static
 
 # Tapping (2 secs with 0.5 s intervals)
 fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
