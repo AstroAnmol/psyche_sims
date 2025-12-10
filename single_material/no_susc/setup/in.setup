@@ -14,8 +14,8 @@ hard_particles  yes
 communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
-processors      3 3 3
-# running on 27 processors on dustiest
+processors      4 3 3
+# running on 36 processors on dustiest
 
 
 ### VARIABLES DEFINITION
@@ -173,7 +173,7 @@ variable        earth_g equal 9.82 #m/s^2
 variable        psyche_g equal 0.13 #m/s^2
 
 # Time steps
-variable        dt equal 1e-6 # s every 1 microseconds
+variable        dt equal 2e-6 # s every 2 microseconds
 variable        dumptime equal 1e-3 # s every millisecond
 variable        dumpstep equal ${dumptime}/${dt}
 variable        thermostep equal ${dumpstep}
@@ -320,19 +320,28 @@ velocity        all set 0. 0. 0.
 # Tapping (2 secs with 0.5 s intervals)
 fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
 
-run             ${half_second_steps}     #0.5 sec
-
-write_restart   restart_rocky_tapped_05.static
-
-run             ${half_second_steps}     #0.5 sec
-
+run             ${one_second_steps}     #1.0 sec
 write_restart   restart_rocky_tapped_10.static
-run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_rocky_tapped_15.static
-
-run             ${half_second_steps}     #0.5 sec
-
+run             ${one_second_steps}     #1.0 sec
 write_restart   restart_rocky_tapped_20.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_30.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_40.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_50.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_60.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_70.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_80.static
 
 unfix           shear_wiggle
