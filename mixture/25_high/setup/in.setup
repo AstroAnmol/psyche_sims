@@ -313,8 +313,8 @@ set             group pts_floor density ${density_floor} diameter ${particle_dia
 
 # particles and their distribution
 fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_particle1} radius constant ${particle_radius}
-fix             pts2 all particletemplate/sphere 1211303 atom_type 2 density constant ${density_particle2} radius constant ${particle_radius}
-fix             pdd1 all particledistribution/discrete 15487517 2 pts1 0.25 pts2 0.75
+fix             pts2 all particletemplate/sphere 2574239 atom_type 2 density constant ${density_particle2} radius constant ${particle_radius}
+fix             pdd1 all particledistribution/discrete 2113379 2 pts1 0.25 pts2 0.75
 
 # # region and insertion
 region          insertion_b block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE 
@@ -370,8 +370,8 @@ velocity        all set 0. 0. 0.
 
 # write_restart  restart_mix_25_high_cleaned.static
 
-# Tapping (2 secs with 0.5 s intervals)
-fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
+# Tapping (2 mm amplitude at 30 Hz)
+fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
 
 run             ${one_second_steps}     #1.0 sec
 write_restart   restart_mix_25_high_tapped_10.static

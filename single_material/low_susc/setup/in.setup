@@ -316,9 +316,8 @@ velocity        all set 0. 0. 0.
 
 # write_restart  restart_troilite_cleaned.static
 
-# Tapping (2 secs with 0.5 s intervals)
-fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
-
+# Tapping (2 mm amplitude at 30 Hz)
+fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
 run             ${one_second_steps}     #1.0 sec
 write_restart   restart_troilite_tapped_10.static
 
