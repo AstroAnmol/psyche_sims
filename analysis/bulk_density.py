@@ -152,7 +152,7 @@ def porosity(df, box_volume):
 if __name__ == "__main__":
     # Example usage
     folder_paths = ["mixture/25_high/", "mixture/50_high/", "mixture/75_high/",
-                    "single_material/high_susc/", "single_material/low_susc/", "single_material/no_susc/"]
+                     "single_material/low_susc/", "single_material/no_susc/"]
     frames = [750000, 5000000]
     for path in folder_paths:
         print(f"Simulation type: {path}")
