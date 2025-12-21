@@ -101,7 +101,7 @@ variable        magnetic_susc_wall equal ${mag_susc_acrylic}
 # Friction Properties
 variable        friction_coeff_11 equal 1.0 # metallic-metallic
 variable        friction_coeff_12 equal 1.0 # metallic-floor
-variable        friction_coeff_13 equal 1.0 # metallic-wall
+variable        friction_coeff_13 equal 0.1 # metallic-wall
 
 variable        friction_coeff_21 equal ${friction_coeff_12}
 variable        friction_coeff_22 equal 0.1 # Floor-floor (doesn't interact)
