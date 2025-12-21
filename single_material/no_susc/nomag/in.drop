@@ -292,8 +292,8 @@ unfix           floor_freeze
 fix             floor_freeze pts_floor freeze
 
 # Let particles settle in new gravity
-print           "INFO: Letting particles settle for ${one_second_steps} steps (1 seconds)."
-run            ${one_second_steps}   #1.0 sec
+print           "INFO: Letting particles settle for ${two_second_steps} steps (2 seconds)."
+run            ${two_second_steps}   #2.0 sec
 
 
 # Pull the stopper
