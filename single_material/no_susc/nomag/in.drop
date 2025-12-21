@@ -291,6 +291,11 @@ set             group pts_floor density ${density_floor} diameter ${particle_dia
 unfix           floor_freeze
 fix             floor_freeze pts_floor freeze
 
+# Let particles settle in new gravity
+print           "INFO: Letting particles settle for ${one_second_steps} steps (1 seconds)."
+run            ${one_second_steps}   #1.0 sec
+
+
 # Pull the stopper
 unfix           wall_center
 print           "INFO: Center wall unfix_ed. Stopper pulled."
