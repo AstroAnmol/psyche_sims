@@ -323,6 +323,8 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
+run           0
+
 # Remove the extra particles
 region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
 # group           prtcls_rem region remove_reg
