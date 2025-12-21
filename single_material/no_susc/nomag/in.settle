@@ -18,7 +18,7 @@ processors      4 3 3
 # running on 36 processors on dustiest
 
 #############################
-read_restart ../setup/restart_rocky_nomag_settled.static
+read_restart ../setup/restart_rocky_tapped_80_cleaned.static
 
 ### VARIABLES DEFINITION
 
@@ -292,44 +292,10 @@ set             group pts_floor density ${density_floor} diameter ${particle_dia
 unfix           floor_freeze
 fix             floor_freeze pts_floor freeze
 
+# Let particles settle in new gravity
+print           "INFO: Letting particles settle for ${three_second_steps} steps (3 seconds)."
+run            ${three_second_steps}   #3.0 sec
 
-# Pull the stopper
-unfix           wall_center
-print           "INFO: Center wall unfix_ed. Stopper pulled."
-
-
-# --- Avalanche Phase ---
-print           "INFO: Starting avalanching simulation for ${two_second_steps} steps (2 seconds)."
-
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
-                # "write_restart restart_mag_drop.static"
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_rocky_nomag_drop_final_2s.static
-print           "INFO: Restart file 'restart_rocky_nomag_drop_final_2s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
-                # "write_restart restart_mag_drop.static"
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_rocky_nomag_drop_final_4s.static
-print           "INFO: Restart file 'restart_rocky_nomag_drop_final_4s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} #pre no #every ${deci_second_steps} &
-                # "write_restart restart_mag_drop.static"
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_rocky_nomag_drop_final_6s.static
-print           "INFO: Restart file 'restart_rocky_nomag_drop_final_6s.static' written."
-
-print           "INFO: Main Avalanche Phase Completed."
-
-print           "INFO: Simulation ended."
-# --- End of Script ---
+print           "INFO: Settling run complete."
+write_restart   restart_rocky_nomag_settled.static
+print           "INFO: Restart file 'restart_rocky_nomag_settled.static' written."
