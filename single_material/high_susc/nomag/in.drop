@@ -18,7 +18,7 @@ processors      4 3 3
 # running on 36 processors on dustiest
 
 #############################
-read_restart ../setup/restart_kamacite_nomag_settled.static
+read_restart ../nomag/restart_kamacite_nomag_settled.static
 
 ### VARIABLES DEFINITION
 
