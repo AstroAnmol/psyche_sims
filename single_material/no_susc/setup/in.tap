@@ -1,4 +1,4 @@
-### Cleaning up tapped restart files after adding new ones ###
+### Tapping to increase packing fraction ###
 
 ### Initialization
 # Preliminaries
@@ -18,7 +18,7 @@ processors      4 3 3
 # running on 36 processors on dustiest
 
 #############################
-read_restart ./restart_rocky_tapped_80.static
+read_restart ./restart_rocky_filled.static
 
 ### VARIABLES DEFINITION
 
@@ -186,6 +186,7 @@ variable        neighstep equal 1e-2/${dt} # create a new neigh list
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
+variable        three_second_steps equal 3.0/${dt} # number of steps for 3.0 seconds time
 
 ## DEFINITING SIM PROPERTIES
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
@@ -228,7 +229,8 @@ fix             wall_y2 all wall/gran model hertz tangential history primitive t
 fix             wall_center all wall/gran model hertz tangential history primitive type 3 xplane ${mid_wall}
 
 # Gravity
-fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
+# setting the particle assembly in earth gravity
+fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -236,7 +238,7 @@ timestep        ${dt} #seconds
 ## Thermo settings
 # thermo style custom says what thermo data we want printed at each thermo timestep - timestep, num atoms, kinetic energy, volume
 thermo_style 	custom step atoms ke vol
-# thermo output every thermostep timesteps
+# thermo output every therostep timesteps
 thermo		    ${thermostep}
 # LIGGGHTS will ignore last particles and will not normalize against num atoms
 thermo_modify	lost ignore norm no
@@ -271,11 +273,38 @@ fix             floor_freeze pts_floor freeze
 
 run           0
 
-# Remove the extra particles
-region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# group           prtcls_rem region remove_reg
-delete_atoms    region remove_reg
+# change to psyche gravity
+unfix           grav
+fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
-run            ${half_second_steps}    #0.5 sec
+run             ${three_second_steps}     #3.0 sec
+write_restart   restart_rocky_psyche.static
 
-write_restart   restart_rocky_tapped_80_cleaned.static
+# Tapping (2 mm amplitude at 30 Hz)
+fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_10.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_20.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_30.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_40.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_50.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_60.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_70.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_rocky_tapped_80.static
+
+unfix           shear_wiggle

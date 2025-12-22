@@ -298,50 +298,8 @@ run             ${one_second_steps}     #1.0 sec
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_rocky_filled.static
-
 # Stop insertion
 unfix           ins
 
-# Remove particles
-
-# ensure particles are static
-velocity        all set 0. 0. 0.
-
-# # Remove the extra particles
-# region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# # group           prtcls_rem region remove_reg
-# delete_atoms    region remove_reg
-
-# run             ${0_1_second_steps}
-
-# write_restart  restart_rocky_cleaned.static
-
-# Tapping (2 mm amplitude at 30 Hz)
-fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_10.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_20.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_30.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_40.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_50.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_60.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_70.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_rocky_tapped_80.static
-
-unfix           shear_wiggle
+write_restart   restart_rocky_filled.static
+print           "INFO: Restart file 'restart_rocky_filled.static' written."
