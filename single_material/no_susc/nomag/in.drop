@@ -329,6 +329,24 @@ print           "INFO: Avalanching run for 2 seconds complete."
 write_restart   restart_rocky_nomag_drop_final_6s.static
 print           "INFO: Restart file 'restart_rocky_nomag_drop_final_6s.static' written."
 
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+                # "write_restart restart_mag_drop.static"
+
+print           "INFO: Avalanching run for 2 seconds complete."
+
+write_restart   restart_rocky_nomag_drop_final_8s.static
+print           "INFO: Restart file 'restart_rocky_nomag_drop_final_8s.static' written."
+
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} #pre no #every ${deci_second_steps} &
+                # "write_restart restart_mag_drop.static"
+
+print           "INFO: Avalanching run for 2 seconds complete."
+
+write_restart   restart_rocky_nomag_drop_final_10s.static
+print           "INFO: Restart file 'restart_rocky_nomag_drop_final_10s.static' written."
+
 print           "INFO: Main Avalanche Phase Completed."
 
 print           "INFO: Simulation ended."
