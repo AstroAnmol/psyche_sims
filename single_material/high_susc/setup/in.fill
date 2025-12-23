@@ -14,8 +14,8 @@ hard_particles  yes
 communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
-processors      3 3 3
-# running on 27 processors on dustiest
+processors      4 3 3
+# running on 36 processors on dustiest
 
 
 ### VARIABLES DEFINITION
@@ -298,37 +298,8 @@ run             ${one_second_steps}     #1.0 sec
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_kamacite_filled.static
-
 # Stop insertion
 unfix           ins
 
-# Remove particles
-
-# ensure particles are static
-velocity        all set 0. 0. 0.
-
-# Change Gravity
-unfix          grav
-# setting the particle assembly in psyche gravity
-fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
-
-# Tapping (2 secs with 0.5 s intervals)
-fix             shear_wiggle pts_floor move wiggle 0 0 5.0E-4 0.0333333
-
-run             ${half_second_steps}     #0.5 sec
-
-write_restart   restart_kamacite_tapped_05.static
-
-run             ${half_second_steps}     #0.5 sec
-
-write_restart   restart_kamacite_tapped_10.static
-
-run             ${half_second_steps}     #0.5 sec
-
-write_restart   restart_kamacite_tapped_15.static
-
-run             ${half_second_steps}     #0.5 sec
-
-write_restart   restart_kamacite_tapped_20.static
-unfix           shear_wiggle
+write_restart   restart_kamacite_filled.static
+print           "INFO: Restart file 'restart_kamacite_filled.static' written." 
