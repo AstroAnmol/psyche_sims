@@ -256,26 +256,6 @@ variable        fill_height equal 0.100 #mm
 variable        floor_height equal 0.00816497
 variable        fill_height_f equal ${floor_height}+${fill_height}
 
-# particle ground
-region          floor block EDGE EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
-lattice         hcp ${particle_dia}
-create_atoms    2 region floor
-group           pts_floor region floor
-set             group pts_floor density ${density_floor} diameter ${particle_dia}
-
-# particles and their distribution
-fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_particles} radius constant ${particle_radius} 
-fix             pdd1 all particledistribution/discrete 15487517 1 pts1 1.0
-
-# # region and insertion
-region          insertion_b block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE 
-group           prtcls region insertion_b
-fix             ins prtcls insert/rate/region seed 104729 distributiontemplate pdd1 nparticles ${number_of_particles} &
-                particlerate 2000 insert_every 1000 overlapcheck yes region insertion_b ntry_mc 10000
-
-
-# region and insertion
-group		    nve_group region domain
 
 ### Detailed settings
 # apply nve integration to all particles that are inserted as single particles
