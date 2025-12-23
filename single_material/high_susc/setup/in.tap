@@ -20,8 +20,6 @@ processors      4 3 3
 #############################
 read_restart ./restart_kamacite_filled.static
 
-
-
 ### VARIABLES DEFINITION
 
 # Dimensions of the box
@@ -30,10 +28,6 @@ variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
-# Declare domain
-region          domain block 0 ${mid_wall} 0 ${dom_width} 0 ${dom_height} units box
-# Three types of materials to be used - 1: particles, 2: floor, 3: walls
-create_box      3 domain
 
 # variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
