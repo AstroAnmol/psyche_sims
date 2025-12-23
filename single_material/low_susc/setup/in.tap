@@ -1,4 +1,4 @@
-### Avalanching experiment with rocky material of low magnetic susceptibility (Troilite)
+### Tapping to increase packing fraction ###
 
 ### Initialization
 # Preliminaries
@@ -18,7 +18,7 @@ processors      4 3 3
 # running on 36 processors on dustiest
 
 #############################
-read_restart ../nomag/restart_troilite_nomag_settled.static
+read_restart ./restart_troilite_filled.static
 
 ### VARIABLES DEFINITION
 
@@ -185,7 +185,6 @@ variable        neighstep equal 1e-2/${dt} # create a new neigh list
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
-variable        two_second_steps equal 2.0/${dt} # number of steps for 2.0 seconds time
 variable        three_second_steps equal 3.0/${dt} # number of steps for 3.0 seconds time
 
 ## DEFINITING SIM PROPERTIES
@@ -221,7 +220,7 @@ pair_coeff	    * *  # the asterisks set force field coeefficients for all atom t
 fix		        wall_z1 all wall/gran model hertz tangential history primitive type 3 zplane 0.0        #floor
 fix		        wall_z2 all wall/gran model hertz tangential history primitive type 3 zplane ${dom_height}
 fix             wall_x1 all wall/gran model hertz tangential history primitive type 3 xplane 0.0            
-fix             wall_x2 all wall/gran model hertz tangential history primitive type 3 xplane ${dom_length}  
+# fix             wall_x2 all wall/gran model hertz tangential history primitive type 3 xplane ${dom_length}  
 fix             wall_y1 all wall/gran model hertz tangential history primitive type 3 yplane 0.0            
 fix             wall_y2 all wall/gran model hertz tangential history primitive type 3 yplane ${dom_width}
 
@@ -230,8 +229,7 @@ fix             wall_center all wall/gran model hertz tangential history primiti
 
 # Gravity
 # setting the particle assembly in earth gravity
-fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
-
+fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -272,70 +270,40 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-run          0
+run           0
 
-change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
+# change to psyche gravity
+unfix           grav
+fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
-# particle ground
-region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
-lattice         hcp ${particle_dia}
-create_atoms    2 region floor
-group           pts_floor region floor
-set             group pts_floor density ${density_floor} diameter ${particle_dia}
+run             ${three_second_steps}     #3.0 sec
+write_restart   restart_troilite_psyche.static
 
-unfix           floor_freeze
-fix             floor_freeze pts_floor freeze
+# Tapping (2 mm amplitude at 30 Hz)
+fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
 
-# Pull the stopper
-unfix           wall_center
-print           "INFO: Center wall unfix_ed. Stopper pulled."
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_10.static
 
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_20.static
 
-# --- Avalanche Phase ---
-print           "INFO: Starting avalanching simulation for ${two_second_steps} steps (2 seconds)."
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_30.static
 
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_40.static
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_50.static
 
-print           "INFO: Avalanching run for 2 seconds complete."
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_60.static
 
-write_restart   restart_troilite_nomag_drop_final_2s.static
-print           "INFO: Restart file 'restart_troilite_nomag_drop_final_2s.static' written."
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_70.static
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_troilite_tapped_80.static
 
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_troilite_nomag_drop_final_4s.static
-print           "INFO: Restart file 'restart_troilite_nomag_drop_final_4s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_troilite_nomag_drop_final_6s.static
-print           "INFO: Restart file 'restart_troilite_nomag_drop_final_6s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_troilite_nomag_drop_final_8s.static
-print           "INFO: Restart file 'restart_troilite_nomag_drop_final_8s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_troilite_nomag_drop_final_10s.static
-print           "INFO: Restart file 'restart_troilite_nomag_drop_final_10s.static' written."
-
-print           "INFO: Main Avalanche Phase Completed."
-
-print           "INFO: Simulation ended."
-# --- End of Script ---
+unfix           shear_wiggle

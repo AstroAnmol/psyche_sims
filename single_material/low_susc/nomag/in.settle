@@ -285,8 +285,8 @@ unfix           floor_freeze
 fix             floor_freeze pts_floor freeze
 
 # Let particles settle in new gravity
-print           "INFO: Letting particles settle for ${three_second_steps} steps (3 seconds)."
-run            ${three_second_steps}   #3.0 sec
+print           "INFO: Letting particles settle for ${half_second_steps} steps (0.5 seconds)."
+run            ${half_second_steps}   #0.5 sec
 
 print           "INFO: Settling run complete."
 write_restart   restart_troilite_nomag_settled.static
