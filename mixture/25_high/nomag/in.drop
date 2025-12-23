@@ -328,6 +328,16 @@ run          0
 
 change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
 
+# particle ground
+region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
+lattice         hcp ${particle_dia}
+create_atoms    2 region floor
+group           pts_floor region floor
+set             group pts_floor density ${density_floor} diameter ${particle_dia}
+
+unfix           floor_freeze
+fix             floor_freeze pts_floor freeze
+
 # Pull the stopper
 unfix           wall_center
 print           "INFO: Center wall unfix_ed. Stopper pulled."
@@ -361,6 +371,22 @@ print           "INFO: Avalanching run for 2 seconds complete."
 
 write_restart   restart_mix_25_high_nomag_drop_final_6s.static
 print           "INFO: Restart file 'restart_mix_25_high_nomag_drop_final_6s.static' written."
+
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
+
+print           "INFO: Avalanching run for 2 seconds complete."
+
+write_restart   restart_mix_25_high_nomag_drop_final_8s.static
+print           "INFO: Restart file 'restart_mix_25_high_nomag_drop_final_8s.static' written."
+
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
+
+print           "INFO: Avalanching run for 2 seconds complete."
+
+write_restart   restart_mix_25_high_nomag_drop_final_10s.static
+print           "INFO: Restart file 'restart_mix_25_high_nomag_drop_final_10s.static' written."
 
 print           "INFO: Main Avalanche Phase Completed."
 
