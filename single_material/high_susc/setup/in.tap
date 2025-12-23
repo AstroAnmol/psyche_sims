@@ -270,7 +270,7 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-un           0
+run           0
 
 # change to psyche gravity
 unfix           grav
