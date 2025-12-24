@@ -1,4 +1,4 @@
-### Cleaning up tapped restart files after adding new ones ###
+### Tapping to increase packing fraction ###
 
 ### Initialization
 # Preliminaries
@@ -18,7 +18,7 @@ processors      4 3 3
 # running on 36 processors on dustiest
 
 #############################
-read_restart ./restart_mix_50_high_tapped_80.static
+read_restart ./restart_mix_50_high_filled.static
 
 ### VARIABLES DEFINITION
 
@@ -234,6 +234,7 @@ variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seco
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
 variable        two_second_steps equal 2.0/${dt} # number of steps for 2.0 seconds time
+variable        three_second_steps equal 3.0/${dt} # number of steps for 3.0 seconds time
 
 ## DEFINITING SIM PROPERTIES
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
@@ -282,7 +283,7 @@ fix             wall_center all wall/gran model hertz tangential history primiti
 
 # Gravity
 # setting the particle assembly in earth gravity
-fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
+fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -323,13 +324,40 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-run           ${half_second_steps}     #0.5 sec
+run          0
 
-# Remove the extra particles
-region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# group           prtcls_rem region remove_reg
-delete_atoms    region remove_reg
+# change to psyche gravity
+unfix           grav
+fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
-run            ${half_second_steps}    #0.5 sec
+run             ${three_second_steps}     #3.0 sec
+write_restart   restart_mix_50_high_psyche.static
 
-write_restart   restart_mix_50_high_tapped_80_cleaned.static
+# Tapping (2 mm amplitude at 30 Hz)
+fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_10.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_20.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_30.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_40.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_50.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_60.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_70.static
+
+run             ${one_second_steps}     #1.0 sec
+write_restart   restart_mix_50_high_tapped_80.static
+
+unfix           shear_wiggle

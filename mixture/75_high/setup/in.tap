@@ -1,4 +1,4 @@
-### Avalanching experiment with mixture of high-susceptibility metallic particles and rocky particles (75% metallic by number)
+### Tapping to increase packing fraction ###
 
 ### Initialization
 # Preliminaries
@@ -7,7 +7,7 @@ atom_style      hybrid granular dipole
 atom_modify     sort 10000 0
 
 # boundaries
-boundary        f f f
+boundary        f f fs
 
 newton          off
 hard_particles  yes
@@ -17,6 +17,8 @@ communicate     single vel yes
 processors      4 3 3
 # running on 36 processors on dustiest
 
+#############################
+read_restart ./restart_mix_75_high_filled.static
 
 ### VARIABLES DEFINITION
 
@@ -26,10 +28,6 @@ variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
 
-# Declare domain
-region          domain block 0 ${mid_wall} 0 ${dom_width} 0 ${dom_height} units box
-# Four types of materials to be used - 1,2: particles, 3: floor, 4: walls
-create_box      4 domain
 
 # variable        dom_dia equal qrt(${dom_length}*${dom_length}+${dom_width}*${dom_width}+${dom_height}*${dom_height})
 
@@ -38,7 +36,7 @@ variable        particle_dia equal 0.010 # 10 mm
 variable        particle_radius equal ${particle_dia}/2
 
 # Neighbor skin distance 
-# use the first one for non-magnetic case and second with magnetic cases
+# use the first one for non-magnetic case
 variable        skin_dist equal  2*${particle_dia} #meters 2 diameters, overall 3 diameters 
 # variable        skin_dist equal  ${dom_diag} # domain diagonal for magnetic sims
 
@@ -235,6 +233,8 @@ variable        neighstep equal 1e-2/${dt} # create a new neigh list
 variable        half_second_steps equal 0.5/${dt} # number of steps for 0.5 seconds time
 variable        one_second_steps equal 1/${dt} # number of steps for 1.0 seconds time
 variable        0_1_second_steps equal 0.1/${dt}
+variable        two_second_steps equal 2.0/${dt} # number of steps for 2.0 seconds time
+variable        three_second_steps equal 3.0/${dt} # number of steps for 3.0 seconds time
 
 ## DEFINITING SIM PROPERTIES
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
@@ -298,33 +298,11 @@ thermo_modify	lost ignore norm no
 
 ## Particle insertion
 variable        2_5_particle_rad equal ${particle_radius}*2.5
-variable        number_of_particles equal 2000
+variable        number_of_particles equal 1600
 
 variable        fill_height equal 0.100 #mm
 variable        floor_height equal 0.00816497
 variable        fill_height_f equal ${floor_height}+${fill_height}
-
-# particle ground
-region          floor block EDGE EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
-lattice         hcp ${particle_dia}
-create_atoms    3 region floor
-group           pts_floor region floor
-set             group pts_floor density ${density_floor} diameter ${particle_dia}
-
-# particles and their distribution
-fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_particle1} radius constant ${particle_radius}
-fix             pts2 all particletemplate/sphere 1211303 atom_type 2 density constant ${density_particle2} radius constant ${particle_radius}
-fix             pdd1 all particledistribution/discrete/numberbased 15487517 2 pts1 0.75 pts2 0.25
-
-# # region and insertion
-region          insertion_b block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE 
-group           prtcls region insertion_b
-fix             ins prtcls insert/rate/region seed 104729 distributiontemplate pdd1 nparticles ${number_of_particles} &
-                particlerate 2000 insert_every 1000 overlapcheck yes region insertion_b ntry_mc 10000
-
-
-# region and insertion
-group		    nve_group region domain
 
 ### Detailed settings
 # apply nve integration to all particles that are inserted as single particles
@@ -346,29 +324,14 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-# Fill the left half (1 secs)
-run             ${one_second_steps}     #1.0 sec
+run          0
 
-run             ${half_second_steps}     #0.5 sec
+# change to psyche gravity
+unfix           grav
+fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
-write_restart   restart_mix_75_high_filled.static
-
-# Stop insertion
-unfix           ins
-
-# Remove particles
-
-# ensure particles are static
-velocity        all set 0. 0. 0.
-
-# # Remove the extra particles
-# region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# # group           prtcls_rem region remove_reg
-# delete_atoms    region remove_reg
-
-# run             ${0_1_second_steps}
-
-# write_restart  restart_mix_75_high_cleaned.static
+run             ${three_second_steps}     #3.0 sec
+write_restart   restart_mix_75_high_psyche.static
 
 # Tapping (2 mm amplitude at 30 Hz)
 fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333

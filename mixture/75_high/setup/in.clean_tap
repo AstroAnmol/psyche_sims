@@ -282,7 +282,7 @@ fix             wall_center all wall/gran model hertz tangential history primiti
 
 # Gravity
 # setting the particle assembly in earth gravity
-fix             grav all gravity ${earth_g} vector 0.0 0.0 -1.0 # negative z
+fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
 # Time step
 timestep        ${dt} #seconds 
@@ -323,7 +323,7 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-run           0
+run           ${half_second_steps}     #0.5 sec
 
 # Remove the extra particles
 region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE

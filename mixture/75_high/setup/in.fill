@@ -1,4 +1,4 @@
-### Avalanching experiment with mixture of high-susceptibility metallic particles and rocky particles (50% metallic by number)
+### Avalanching experiment with mixture of high-susceptibility metallic particles and rocky particles (75% metallic by number)
 
 ### Initialization
 # Preliminaries
@@ -314,7 +314,7 @@ set             group pts_floor density ${density_floor} diameter ${particle_dia
 # particles and their distribution
 fix	            pts1 all particletemplate/sphere 1299709 atom_type 1 density constant ${density_particle1} radius constant ${particle_radius}
 fix             pts2 all particletemplate/sphere 1211303 atom_type 2 density constant ${density_particle2} radius constant ${particle_radius}
-fix             pdd1 all particledistribution/discrete/numberbased 15487517 2 pts1 0.50 pts2 0.50
+fix             pdd1 all particledistribution/discrete/numberbased 15487517 2 pts1 0.75 pts2 0.25
 
 # # region and insertion
 region          insertion_b block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE 
@@ -351,50 +351,8 @@ run             ${one_second_steps}     #1.0 sec
 
 run             ${half_second_steps}     #0.5 sec
 
-write_restart   restart_mix_50_high_filled.static
-
 # Stop insertion
 unfix           ins
 
-# Remove particles
-
-# ensure particles are static
-velocity        all set 0. 0. 0.
-
-# # Remove the extra particles
-# region          remove_reg block EDGE ${mid_wall} EDGE EDGE ${fill_height_f} EDGE
-# # group           prtcls_rem region remove_reg
-# delete_atoms    region remove_reg
-
-# run             ${0_1_second_steps}
-
-# write_restart  restart_mix_50_high_cleaned.static
-
-# Tapping (2 mm amplitude at 30 Hz)
-fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_10.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_20.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_30.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_40.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_50.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_60.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_70.static
-
-run             ${one_second_steps}     #1.0 sec
-write_restart   restart_mix_50_high_tapped_80.static
-
-unfix           shear_wiggle
+write_restart   restart_mix_75_high_filled.static
+print           "INFO: Restart file 'restart_mix_75_high_filled.static' written."

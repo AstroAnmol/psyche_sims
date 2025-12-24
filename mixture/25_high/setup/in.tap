@@ -331,7 +331,7 @@ unfix           grav
 fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
 
 run             ${three_second_steps}     #3.0 sec
-write_restart   restart_rocky_psyche.static
+write_restart   restart_mix_25_high_psyche.static
 
 # Tapping (2 mm amplitude at 30 Hz)
 fix             shear_wiggle pts_floor move wiggle 0 0 2.0E-3 0.0333333
