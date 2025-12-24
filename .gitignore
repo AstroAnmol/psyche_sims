@@ -1,6 +1,7 @@
 # IDE and Editor
 .vscode/
 .DS_Store
+*.sh
 
 # Python
 __pycache__/
