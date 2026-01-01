@@ -14,8 +14,8 @@ hard_particles  yes
 communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
-processors      5 4 2
-# running on 40 processors on dustiest
+processors      7 3 2
+# running on 42 processors on dustiest
 
 #############################
 read_restart ../field_1000uT/restart_mix_25_high_1000uT_settled.static
@@ -23,7 +23,7 @@ read_restart ../field_1000uT/restart_mix_25_high_1000uT_settled.static
 ### VARIABLES DEFINITION
 
 # Dimensions of the box
-variable        dom_length equal 0.330 # 330 mm
+variable        dom_length equal 0.300 # 300 mm
 variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
@@ -277,7 +277,7 @@ pair_coeff	    * *  # the asterisks set force field coeefficients for all atom t
 fix		        wall_z1 all wall/gran model hertz tangential history primitive type 4 zplane 0.0        #floor
 fix		        wall_z2 all wall/gran model hertz tangential history primitive type 4 zplane ${dom_height}
 fix             wall_x1 all wall/gran model hertz tangential history primitive type 4 xplane 0.0            
-# fix             wall_x2 all wall/gran model hertz tangential history primitive type 4 xplane ${dom_length}  
+fix             wall_x2 all wall/gran model hertz tangential history primitive type 4 xplane ${dom_length}  
 fix             wall_y1 all wall/gran model hertz tangential history primitive type 4 yplane 0.0            
 fix             wall_y2 all wall/gran model hertz tangential history primitive type 4 yplane ${dom_width}
 
