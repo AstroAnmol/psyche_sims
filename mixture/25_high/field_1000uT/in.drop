@@ -267,7 +267,7 @@ fix             m8 all property/global cohesionEnergyDensity peratomtypepair 4 $
                                     ${cohesion_energy_21} ${cohesion_energy_22} ${cohesion_energy_23} ${cohesion_energy_24} ${cohesion_energy_31} ${cohesion_energy_32} ${cohesion_energy_33} ${cohesion_energy_34} &
                                     ${cohesion_energy_41} ${cohesion_energy_42} ${cohesion_energy_43} ${cohesion_energy_44}
 
-# fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_particle1}  ${magnetic_susc_particle2} ${magnetic_susc_floor} ${magnetic_susc_wall}
+fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_particle1}  ${magnetic_susc_particle2} ${magnetic_susc_floor} ${magnetic_susc_wall}
 
 ## Pair style
 pair_style      gran model hertz tangential history cohesion sjkr rolling_friction epsd torsionTorque on
@@ -333,7 +333,7 @@ fix             floor_freeze pts_floor freeze
 
 run          0
 
-change_box      all boundary f f fs x final 0 ${dom_length} # 280 mm
+change_box      all boundary f f fs x final 0 ${dom_length} # 300 mm
 
 # particle ground
 region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
