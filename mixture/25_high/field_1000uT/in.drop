@@ -14,8 +14,8 @@ hard_particles  yes
 communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
-processors      4 3 3
-# running on 36 processors on dustiest
+processors      5 4 2
+# running on 40 processors on dustiest
 
 #############################
 read_restart ../field_1000uT/restart_mix_25_high_1000uT_settled.static
@@ -363,39 +363,39 @@ print           "INFO: Avalanching run for 2 seconds complete."
 write_restart   restart_mix_25_high_1000uT_drop_final_2s.static
 print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_2s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_mix_25_high_1000uT_drop_final_4s.static
-print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_4s.static' written."
+# write_restart   restart_mix_25_high_1000uT_drop_final_4s.static
+# print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_4s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_mix_25_high_1000uT_drop_final_6s.static
-print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_6s.static' written."
+# write_restart   restart_mix_25_high_1000uT_drop_final_6s.static
+# print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_6s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_mix_25_high_1000uT_drop_final_8s.static
-print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_8s.static' written."
+# write_restart   restart_mix_25_high_1000uT_drop_final_8s.static
+# print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_8s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_mix_25_high_1000uT_drop_final_10s.static
-print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_10s.static' written."
+# write_restart   restart_mix_25_high_1000uT_drop_final_10s.static
+# print           "INFO: Restart file 'restart_mix_25_high_1000uT_drop_final_10s.static' written."
 
-print           "INFO: Main Avalanche Phase Completed."
+# print           "INFO: Main Avalanche Phase Completed."
 
-print           "INFO: Simulation ended."
-# --- End of Script ---
+# print           "INFO: Simulation ended."
+# # --- End of Script ---
