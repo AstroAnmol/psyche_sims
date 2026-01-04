@@ -281,8 +281,8 @@ fix             wall_x2 all wall/gran model hertz tangential history primitive t
 fix             wall_y1 all wall/gran model hertz tangential history primitive type 4 yplane 0.0            
 fix             wall_y2 all wall/gran model hertz tangential history primitive type 4 yplane ${dom_width}
 
-## wall in centre which is removed to simulate mass wasting
-fix             wall_center all wall/gran model hertz tangential history primitive type 4 xplane ${mid_wall}
+# ## wall in centre which is removed to simulate mass wasting
+# fix             wall_center all wall/gran model hertz tangential history primitive type 4 xplane ${mid_wall}
 
 # Gravity
 # setting the particle assembly in earth gravity
