@@ -229,7 +229,7 @@ variable        checktimestep equal 2e-3/${dt}
 variable        neighstep equal 1e-2/${dt} # create a new neigh list 
 
 # MAGNETIC TIME NEEDED IF MAGNETIC FORCES ARE USED
-variable        magtime equal 2e-3 
+variable        magtime equal 4e-3 
 variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
 
 # Variables for run times
