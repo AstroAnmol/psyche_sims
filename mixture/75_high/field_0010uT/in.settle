@@ -18,7 +18,7 @@ processors      6 5 4
 # running on 120 processors on dustiest
 
 #############################
-read_restart ../field_0100uT/restart_mix_25_high_0100uT_settled.static
+read_restart ../nomag/restart_mix_75_high_nomag_settled.static
 
 ### VARIABLES DEFINITION
 
@@ -216,9 +216,8 @@ variable        cohesion_energy_44 equal 0.0 # wall-wall (doesn't interact)
 # Force properties
 variable        earth_g equal 9.82 #m/s^2
 variable        psyche_g equal 0.13 #m/s^2
-variable        mag_B_F equal 100e-6 # 100 uT (B field)
+variable        mag_B_F equal 10e-6 # 10 uT (B field)
 variable        mag_H_F equal ${mag_B_F}*795774.71545947673925 # A/m (H field)
-
 
 # Time steps
 variable        dt equal 2e-6 # s every 2 microseconds
@@ -267,7 +266,7 @@ fix             m8 all property/global cohesionEnergyDensity peratomtypepair 4 $
                                     ${cohesion_energy_21} ${cohesion_energy_22} ${cohesion_energy_23} ${cohesion_energy_24} ${cohesion_energy_31} ${cohesion_energy_32} ${cohesion_energy_33} ${cohesion_energy_34} &
                                     ${cohesion_energy_41} ${cohesion_energy_42} ${cohesion_energy_43} ${cohesion_energy_44}
 
-# fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_particle1}  ${magnetic_susc_particle2} ${magnetic_susc_floor} ${magnetic_susc_wall}
+fix             m9 all property/global magneticSusceptibility peratomtype ${magnetic_susc_particle1}  ${magnetic_susc_particle2} ${magnetic_susc_floor} ${magnetic_susc_wall}
 
 ## Pair style
 pair_style      gran model hertz tangential history cohesion sjkr rolling_friction epsd torsionTorque on
@@ -287,10 +286,6 @@ fix             wall_center all wall/gran model hertz tangential history primiti
 # Gravity
 # setting the particle assembly in earth gravity
 fix             grav all gravity ${psyche_g} vector 0.0 0.0 -1.0 # negative z
-
-# fix magnetic field
-fix             mag all magnetic    0 0 ${mag_H_F} ${magstep} inclusion convergence
-fix             ctm all check/timestep/mag ${magstep} 0.005
 
 # Time step
 timestep        ${dt} #seconds 
@@ -331,71 +326,28 @@ velocity       all set 0. 0. 0.
 ## freeze
 fix             floor_freeze pts_floor freeze
 
-run          0
+run           0
 
 change_box      all boundary f f fs x final 0 ${dom_length} # 300 mm
 
 # particle ground
-# region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
-# lattice         hcp ${particle_dia}
-# create_atoms    3 region floor
-# group           pts_floor region floor
-# set             group pts_floor density ${density_floor} diameter ${particle_dia}
+region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
+lattice         hcp ${particle_dia}
+create_atoms    3 region floor
+group           pts_floor region floor
+set             group pts_floor density ${density_floor} diameter ${particle_dia}
 
 unfix           floor_freeze
 fix             floor_freeze pts_floor freeze
 
-# Pull the stopper
-unfix           wall_center
-print           "INFO: Center wall unfix_ed. Stopper pulled."
+# fix magnetic field
+fix             mag all magnetic    0 0 ${mag_H_F} ${magstep} inclusion convergence
+fix             ctm all check/timestep/mag ${magstep} 0.005
 
 
-# --- Avalanche Phase ---
-print           "INFO: Starting avalanching simulation for ${two_second_steps} steps (2 seconds)."
+print           "INFO: Letting particles settle for ${one_second_steps} steps (1 second)."
+run            ${one_second_steps}   #1 sec
 
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
-                # "write_restart restart_mag_drop.static"
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_mix_25_high_0100uT_drop_final_2s.static
-print           "INFO: Restart file 'restart_mix_25_high_0100uT_drop_final_2s.static' written."
-
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
-
-# print           "INFO: Avalanching run for 2 seconds complete."
-
-# write_restart   restart_mix_25_high_0100uT_drop_final_4s.static
-# print           "INFO: Restart file 'restart_mix_25_high_0100uT_drop_final_4s.static' written."
-
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
-
-# print           "INFO: Avalanching run for 2 seconds complete."
-
-# write_restart   restart_mix_25_high_0100uT_drop_final_6s.static
-# print           "INFO: Restart file 'restart_mix_25_high_0100uT_drop_final_6s.static' written."
-
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
-
-# print           "INFO: Avalanching run for 2 seconds complete."
-
-# write_restart   restart_mix_25_high_0100uT_drop_final_8s.static
-# print           "INFO: Restart file 'restart_mix_25_high_0100uT_drop_final_8s.static' written."
-
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
-
-# print           "INFO: Avalanching run for 2 seconds complete."
-
-# write_restart   restart_mix_25_high_0100uT_drop_final_10s.static
-# print           "INFO: Restart file 'restart_mix_25_high_0100uT_drop_final_10s.static' written."
-
-# print           "INFO: Main Avalanche Phase Completed."
-
-# print           "INFO: Simulation ended."
-# --- End of Script ---
+print           "INFO: Settling run complete."
+write_restart   restart_mix_75_high_0010uT_settled.static
+print           "INFO: Restart file 'restart_mix_75_high_0010uT_settled.static' written."

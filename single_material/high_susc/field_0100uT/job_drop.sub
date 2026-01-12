@@ -1,0 +1,22 @@
+#!/bin/csh
+#SBATCH --job-name=kamacite_field_0100uT_drop
+#SBATCH --nodes=1
+#SBATCH --ntasks=120
+#SBATCH --oversubscribe
+#SBATCH --time 24:00:00
+#SBATCH --mail-user sikka@umd.edu
+#SBATCH --mail-type=ALL
+
+#############################################################
+# change the below input variable to your own filename
+#############################################################
+
+
+set dir=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/psyche_sims/high_susc/field_0100uT
+set codeexe=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/avalanching_experiments/lmp_auto
+
+cd $dir
+module load openmpi
+module load eigen
+module load boost
+mpirun -np 120 $codeexe -echo both -i ./in.drop > ./output_drop.txt
