@@ -12,7 +12,7 @@
 #############################################################
 
 
-set dir=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/psyche_sims/low_susc/field_1000uT
+set dir=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/psyche_sims/single_material/low_susc/field_1000uT
 set codeexe=/scratch/zt1/project/hartzell-lab/user/sikka/SIMS-LIGGGHTS/avalanching_experiments/lmp_auto
 
 cd $dir
