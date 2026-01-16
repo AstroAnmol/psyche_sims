@@ -14,8 +14,8 @@ hard_particles  yes
 communicate     single vel yes
 
 # the product of the processors must equal P, the number of processors used when running the file: mpirun -np 4 ...
-processors      4 3 3
-# running on 36 processors on dustiest
+processors      6 5 4
+# running on 120 processors on dustiest
 
 #############################
 read_restart ../nomag/restart_mix_25_high_nomag_settled.static
@@ -228,7 +228,7 @@ variable        checktimestep equal 2e-3/${dt}
 variable        neighstep equal 1e-2/${dt} # create a new neigh list 
 
 # MAGNETIC TIME NEEDED IF MAGNETIC FORCES ARE USED
-variable        magtime equal 2e-3 
+variable        magtime equal 4e-3 
 variable        magstep equal ${magtime}/${dt} # calculate new magnetic forces every magstep steps
 
 # Variables for run times
@@ -328,10 +328,12 @@ fix             floor_freeze pts_floor freeze
 
 run           0
 
+change_box      all boundary f f fs x final 0 ${dom_length} # 300 mm
+
 # particle ground
 region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
 lattice         hcp ${particle_dia}
-create_atoms    2 region floor
+create_atoms    3 region floor
 group           pts_floor region floor
 set             group pts_floor density ${density_floor} diameter ${particle_dia}
 

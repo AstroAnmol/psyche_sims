@@ -269,7 +269,7 @@ fix             ctg all check/timestep/gran ${checktimestep} 0.01 0.01
 # unfix           ctg
 
 # Create imaging information
-dump            dmp all custom ${dumpstep} results/dump*.post id type x y z vx vy vz radius fx fy fz mass
+dump            dmp all custom ${dumpstep} results/dump*.post id type x y z vx vy vz radius fx fy fz magfx magfy magfz mux muy muz mass
 
 
 # ensure particles are static 
