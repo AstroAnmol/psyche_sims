@@ -281,7 +281,7 @@ change_box      all boundary f f fs x final 0 ${dom_length} # 300 mm
 # particle ground
 region          floor block ${mid_wall} EDGE EDGE EDGE ${particle_radius} ${2_5_particle_rad}
 lattice         hcp ${particle_dia}
-create_atoms    3 region floor
+create_atoms    2 region floor
 group           pts_floor region floor
 set             group pts_floor density ${density_floor} diameter ${particle_dia}
 
