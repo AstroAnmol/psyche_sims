@@ -293,8 +293,8 @@ fix             mag all magnetic    0 0 ${mag_H_F} ${magstep} inclusion converge
 fix             ctm all check/timestep/mag ${magstep} 0.005
 
 
-print           "INFO: Letting particles settle for ${one_second_steps} steps (1 second)."
-run            ${one_second_steps}   #1 sec
+print           "INFO: Letting particles settle for ${half_second_steps} steps (0.5 second)."
+run            ${half_second_steps}   #1 sec
 
 print           "INFO: Settling run complete."
 write_restart   restart_kamacite_0100uT_settled.static
