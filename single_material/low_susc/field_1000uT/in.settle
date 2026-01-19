@@ -168,7 +168,7 @@ variable        cohesion_energy_33 equal 0.0 # wall-wall (doesn't interact)
 # Force properties
 variable        earth_g equal 9.82 #m/s^2
 variable        psyche_g equal 0.13 #m/s^2
-variable        mag_B_F equal 100e-6 # 100 uT (B field)
+variable        mag_B_F equal 1000e-6 # 1000 uT (B field)
 variable        mag_H_F equal ${mag_B_F}*795774.71545947673925 # A/m (H field)
 
 # Time steps
