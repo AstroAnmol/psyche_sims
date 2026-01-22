@@ -195,7 +195,7 @@ variable        three_second_steps equal 3.0/${dt} # number of steps for 3.0 sec
 # Neighbor skin style - atom pairs within a neighbor cutoff distance = force cutoff + skin distance, styele = bin
 neighbor        ${skin_dist} bin
 # neigh_modify delay 0, this is the default, rebuild neighbor list every timestep
-neigh_modify    delay 0 check yes every neighstep
+neigh_modify    delay 0 one 5000 every ${neighstep} check no
 
 fix             m1 all property/global youngsModulus peratomtype ${youngsM_particles} ${youngsM_floor} ${youngsM_wall} 
 fix             m2 all property/global poissonsRatio peratomtype ${poissons_particles} ${poissons_floor} ${poissons_wall} 
