@@ -23,7 +23,7 @@ read_restart ../setup/restart_troilite_tapped_80_cleaned.static
 ### VARIABLES DEFINITION
 
 # Dimensions of the box
-variable        dom_length equal 0.330 # 330 mm
+variable        dom_length equal 0.300 # 300 mm
 variable        dom_width  equal 0.100 # 100 mm
 variable        dom_height equal 0.160 # 160 mm
 variable        mid_wall   equal 0.150 # 150 mm
