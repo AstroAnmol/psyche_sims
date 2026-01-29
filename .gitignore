@@ -21,6 +21,7 @@ avalanching_analysis/*
 
 # Archive
 archive/*
+test/*
 
 # Commented out
 # *.static
