@@ -1,9 +1,9 @@
 #!/bin/csh
-#SBATCH --job-name=mix_50_high_field_1000uT_drop_2
+#SBATCH --job-name=mix_50_high_field_1000uT_drop_3
 #SBATCH --nodes=1
 #SBATCH --ntasks=120
 #SBATCH --oversubscribe
-#SBATCH --time 75:00:00
+#SBATCH --time 36:00:00
 #SBATCH --mail-user sikka@umd.edu
 #SBATCH --mail-type=ALL
 
@@ -19,4 +19,4 @@ cd $dir
 module load openmpi
 module load eigen
 module load boost
-mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_2.txt
+mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_3.txt

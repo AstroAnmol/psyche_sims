@@ -1,5 +1,5 @@
 #!/bin/csh
-#SBATCH --job-name=troilite_field_1000uT_drop_6
+#SBATCH --job-name=troilite_field_1000uT_drop_7
 #SBATCH --nodes=1
 #SBATCH --ntasks=120
 #SBATCH --oversubscribe
@@ -19,4 +19,4 @@ cd $dir
 module load openmpi
 module load eigen
 module load boost
-mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_6.txt
+mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_7.txt
