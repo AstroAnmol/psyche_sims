@@ -18,7 +18,7 @@ processors      6 5 4
 # running on 120 processors on dustiest
 
 #############################
-read_restart ../field_1000uT/restart_troilite_1000uT_drop_final_14s.static
+read_restart ../field_1000uT/restart_troilite_1000uT_drop_final_16s.static
 
 ### VARIABLES DEFINITION
 
@@ -359,13 +359,22 @@ print           "INFO: Starting avalanching simulation for ${two_second_steps} s
 # print           "INFO: Restart file 'restart_troilite_1000uT_drop_final_14s.static' written."
 
 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
+
+# print           "INFO: Avalanching run for 2 seconds complete."
+
+# write_restart   restart_troilite_1000uT_drop_final_16s.static
+# print           "INFO: Restart file 'restart_troilite_1000uT_drop_final_16s.static' written."
+
+
 # RUN FOR 2.0 SECONDS
 run             ${two_second_steps} 
 
 print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_troilite_1000uT_drop_final_16s.static
-print           "INFO: Restart file 'restart_troilite_1000uT_drop_final_16s.static' written."
+write_restart   restart_troilite_1000uT_drop_final_18s.static
+print           "INFO: Restart file 'restart_troilite_1000uT_drop_final_18s.static' written."
 
 
 # print           "INFO: Main Avalanche Phase Completed."
