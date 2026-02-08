@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=120
 #SBATCH --oversubscribe
-#SBATCH --time 140:00:00
+#SBATCH --time 70:00:00
 #SBATCH --mail-user sikka@umd.edu
 #SBATCH --mail-type=ALL
 
@@ -19,4 +19,4 @@ cd $dir
 module load openmpi
 module load eigen
 module load boost
-mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_2.txt
+mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_3.txt
