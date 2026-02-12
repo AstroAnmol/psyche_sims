@@ -18,7 +18,7 @@ processors      6 5 4
 # running on 42 processors on dustiest
 
 #############################
-read_restart ../field_0010uT/restart_mix_50_high_0010uT_drop_final_2s.static
+read_restart ../field_0010uT/restart_mix_50_high_0010uT_drop_final_6s.static
 
 ### VARIABLES DEFINITION
 
@@ -363,29 +363,29 @@ print           "INFO: Starting avalanching simulation for ${two_second_steps} s
 # write_restart   restart_mix_50_high_0010uT_drop_final_2s.static
 # print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_2s.static' written."
 
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
+# # RUN FOR 2.0 SECONDS
+# run             ${two_second_steps} 
 
-print           "INFO: Avalanching run for 2 seconds complete."
+# print           "INFO: Avalanching run for 2 seconds complete."
 
-write_restart   restart_mix_50_high_0010uT_drop_final_4s.static
-print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_4s.static' written."
-
-# RUN FOR 2.0 SECONDS
-run             ${two_second_steps} 
-
-print           "INFO: Avalanching run for 2 seconds complete."
-
-write_restart   restart_mix_50_high_0010uT_drop_final_6s.static
-print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_6s.static' written."
+# write_restart   restart_mix_50_high_0010uT_drop_final_4s.static
+# print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_4s.static' written."
 
 # # RUN FOR 2.0 SECONDS
 # run             ${two_second_steps} 
 
 # print           "INFO: Avalanching run for 2 seconds complete."
 
-# write_restart   restart_mix_50_high_0010uT_drop_final_8s.static
-# print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_8s.static' written."
+# write_restart   restart_mix_50_high_0010uT_drop_final_6s.static
+# print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_6s.static' written."
+
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
+
+print           "INFO: Avalanching run for 2 seconds complete."
+
+write_restart   restart_mix_50_high_0010uT_drop_final_8s.static
+print           "INFO: Restart file 'restart_mix_50_high_0010uT_drop_final_8s.static' written."
 
 # # RUN FOR 2.0 SECONDS
 # run             ${two_second_steps} 
