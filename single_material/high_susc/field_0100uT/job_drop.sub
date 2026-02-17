@@ -1,5 +1,5 @@
 #!/bin/csh
-#SBATCH --job-name=kamacite_field_0100uT_drop_3
+#SBATCH --job-name=kamacite_field_0100uT_drop_4
 #SBATCH --nodes=1
 #SBATCH --ntasks=120
 #SBATCH --oversubscribe
@@ -19,4 +19,4 @@ cd $dir
 module load openmpi
 module load eigen
 module load boost
-mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_3.txt
+mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_4.txt
