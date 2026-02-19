@@ -58,11 +58,11 @@ variable        youngsM_troilite equal 6.0e9 # N/m^2 # Tang 2023
 variable        poissons_troilite equal 0.25 # Tang 2023
 variable        mag_susc_troilite equal 5.0 # Assumed
 
-# troilite ASTEROID REGOLITH (Frizzell et al 2025)
-variable        density_troilite equal 2500 # kg/m3
-variable        youngsM_troilite equal 5e6 # N/m^2
-variable        poissons_troilite equal 0.20
-variable        mag_susc_troilite equal 0.0 # NOT MAGNETIC
+# ROCKY ASTEROID REGOLITH (Frizzell et al 2025)
+variable        density_rocky equal 2500 # kg/m3
+variable        youngsM_rocky equal 5e6 # N/m^2
+variable        poissons_rocky equal 0.20
+variable        mag_susc_rocky equal 0.0 # NOT MAGNETIC
 
 # Acrylic (Sikka et al 2026)
 variable        density_acrylic equal 1250 # kg/m3
