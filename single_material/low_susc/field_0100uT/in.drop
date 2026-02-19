@@ -310,29 +310,29 @@ print           "INFO: Avalanching run for 2 seconds complete."
 write_restart   restart_troilite_0100uT_drop_final_2s.static
 print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_2s.static' written."
 
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
 
-# print           "INFO: Avalanching run for 2 seconds complete."
+print           "INFO: Avalanching run for 2 seconds complete."
 
-# write_restart   restart_troilite_0100uT_drop_final_4s.static
-# print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_4s.static' written."
+write_restart   restart_troilite_0100uT_drop_final_4s.static
+print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_4s.static' written."
 
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
 
-# print           "INFO: Avalanching run for 2 seconds complete."
+print           "INFO: Avalanching run for 2 seconds complete."
 
-# write_restart   restart_troilite_0100uT_drop_final_6s.static
-# print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_6s.static' written."
+write_restart   restart_troilite_0100uT_drop_final_6s.static
+print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_6s.static' written."
 
-# # RUN FOR 2.0 SECONDS
-# run             ${two_second_steps} 
+# RUN FOR 2.0 SECONDS
+run             ${two_second_steps} 
 
-# print           "INFO: Avalanching run for 2 seconds complete."
+print           "INFO: Avalanching run for 2 seconds complete."
 
-# write_restart   restart_troilite_0100uT_drop_final_8s.static
-# print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_8s.static' written."
+write_restart   restart_troilite_0100uT_drop_final_8s.static
+print           "INFO: Restart file 'restart_troilite_0100uT_drop_final_8s.static' written."
 
 # # RUN FOR 2.0 SECONDS
 # run             ${two_second_steps} 
