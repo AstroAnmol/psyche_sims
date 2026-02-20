@@ -18,7 +18,7 @@ processors      6 5 4
 # running on 120 processors on dustiest
 
 #############################
-read_restart ../nomag/restart_troilite_nomag_settled.static
+read_restart ../field_0000uT/restart_troilite_nomag_settled.static
 
 ### VARIABLES DEFINITION
 
