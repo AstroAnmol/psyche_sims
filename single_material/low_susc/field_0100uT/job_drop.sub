@@ -19,4 +19,4 @@ cd $dir
 module load openmpi
 module load eigen
 module load boost
-mpirun -np 120 $codeexe -echo both -i ./in.drop > ./output_drop_2.txt
+mpirun -np 120 $codeexe -echo both -i ./in.drop_2 > ./output_drop_2.txt
