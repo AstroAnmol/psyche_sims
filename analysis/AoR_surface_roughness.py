@@ -14,23 +14,25 @@ from avalanching_analysis.analysis_functions import *
 if __name__ == '__main__':
     # Inputs:
 
-    mixture = "single_material"
+    # mixture = "single_material"
 
-    # mixture = "mixture"
+    mixture = "mixture"
     # sim_types = ["low_susc"]
     # sim_types = ["high_susc"]
-    sim_types = ["no_susc"]
+    # sim_types = ["no_susc"]
 
-    # sim_types = ["25_high", "50_high"]#, "75_high"]
+    # sim_types = ["25_high", "50_high", "75_high"]
+    sim_types = ["25_high"]
 
     # fields = ["0000","0010","0100","1000"]
-    fields = ["0000"]#,"1000"]
+    # fields = ["0000"]#,"1000"]
+    fields = ["1000"]
+    # fields = ["0000","0010","0100"]
 
-    root_directory_plots = "/Users/sikka-mac/Research/Code/SIMS-LIGGGHTS/psyche_sims/results/plots/"
+    # root_directory_plots = "/Users/sikka-mac/Research/Code/SIMS-LIGGGHTS/psyche_sims/results/plots/"
+    root_directory_plots = "/Users/sikka-mac/Obsidian/Second_Brain/01 - Projects/01 - Research/Writing/Paper 3/Planetary_Science_Journal/figures/plots/"
 
-    # root_directory_plots = "/Users/sikka-mac/Obsidian/Second_Brain/01 - Projects/01 - Research/Writing/Paper 2 (Granular Matter)/figures/final_frames/"
-
-    output_csv_path = "/Users/sikka-mac/Research/Code/SIMS-LIGGGHTS/psyche_sims/results/values/aor_rms_values.csv"  # Path to save CSV
+    output_csv_path = "/Users/sikka-mac/Research/Code/SIMS-LIGGGHTS/psyche_sims/results/values/aor_rms_values_final.csv"  # Path to save CSV
 
     all_results = []  # List to store results from each field
 
@@ -117,7 +119,7 @@ if __name__ == '__main__':
 
                     angleRepose, SE_AoR, best_r_square, best_upper_limit, par_fit, lower_limit, optimal_model = calculate_AoR(data_initial_y_bin, data_final_y_bin)
 
-                    # rms_height, se_rms_height, rms_slope, se_rms_slope = calculate_surface_roughness(top_par_y_bin_final, particle_diameter/2)
+                    rms_height, se_rms_height, rms_slope, se_rms_slope = calculate_surface_roughness(top_par_y_bin_final, particle_diameter/2)
 
                     plot_filename = root_directory_plots +  f"{mixture}_{sim_type}_"  + f"field_{field}_" + f"y_bin_{y_bin_label}" + ".png"
                     

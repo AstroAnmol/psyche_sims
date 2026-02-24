@@ -168,6 +168,5 @@ if __name__ == "__main__":
             print("Average Particle Density (kg/m^3):", avg_par_density(df))
             print("Bulk Density (kg/m^3):", bulk_density(df, box_volume))
             print("Porosity:", porosity(df, box_volume))
+            print("Packing Fraction:", 1 - porosity(df, box_volume))
             print("-" * 40 )
-
-
